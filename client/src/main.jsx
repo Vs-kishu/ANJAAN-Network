@@ -7,7 +7,7 @@ import { store } from "./store/store";
 
 const token = localStorage.getItem("userToken");
 const client = new ApolloClient({
-  uri: "https://anjaan-backend.vercel.app/",
+  uri: "https://anjaan-back.vercel.app/",
   cache: new InMemoryCache(),
   headers: {
     Authorization: token ? `Bearer ${token}` : "", // Add the token to the headers
