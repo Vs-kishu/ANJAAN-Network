@@ -28,7 +28,6 @@ const Home = () => {
       </>
     );
   }
-  console.log(data.getPosts.length);
   return (
     <main className=" grid grid-flow-row place-items-center w-full sm:w-[600px] h-[90vh] pt-5 mx-auto gap-3 overflow-y-scroll ">
       {data?.getPosts?.map((post, index) => (

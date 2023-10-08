@@ -9,7 +9,6 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 const App = () => {
   const { checkUser } = useCheckAuth();
   useEffect(() => {
-    console.log("rendered");
     checkUser();
   }, [checkUser]);
 

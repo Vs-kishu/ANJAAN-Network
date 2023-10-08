@@ -13,17 +13,11 @@ const CommentForm = ({ props }) => {
   });
 
   const [createPost] = useMutation(CREATE_COMMENT, {
-    update(_, { data }) {
-      console.log(data);
-    },
     refetchQueries: [GET_POSTS, "getPosts"],
     variables: values,
   });
 
   const [deletePost] = useMutation(DELETE_COMMENT, {
-    update(_, { data }) {
-      console.log(data);
-    },
     refetchQueries: [GET_POSTS, "getPosts"],
   });
   function handlePost() {

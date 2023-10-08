@@ -7,9 +7,6 @@ const PostForm = ({ props }) => {
   const { values, onChange, onSubmit } = useForm(handlePost, { body: "" });
 
   const [createPost] = useMutation(CREATE_POST, {
-    update(_, { data }) {
-      console.log(data);
-    },
     refetchQueries: [GET_POSTS, "getPosts"],
     variables: values,
   });

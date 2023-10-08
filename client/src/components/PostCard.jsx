@@ -9,12 +9,22 @@ import { useSelector } from "react-redux";
 import { GET_POSTS } from "../graphql/queries";
 import CommentForm from "./CommentForm";
 import { useState } from "react";
+import LikesCard from "./LikesCard";
 
 const PostCard = ({ post, styles }) => {
-  const { body, createdAt, likeCount, commentCount, comments, userName, id } =
-    post;
+  const {
+    body,
+    createdAt,
+    likes,
+    likeCount,
+    commentCount,
+    comments,
+    userName,
+    id,
+  } = post;
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((store) => store.user);
+  const [openLike, setOpenLike] = useState(false);
 
   const [likePost] = useMutation(LIKE_POST, {
     variables: { postID: id },
@@ -28,7 +38,8 @@ const PostCard = ({ post, styles }) => {
   const handleLike = () => {
     likePost();
   };
-
+  const alreadyLiked = likes.find((like) => like.userName === user?.userName);
+  console.log(alreadyLiked);
   return (
     <div
       className={`${styles} relative font-kalam w-full  sm:w-96 h-60 p-5 flex flex-col items-center  rounded-lg shadow-sm shadow-black hover:scale-10 border border-gray-400`}
@@ -52,21 +63,30 @@ const PostCard = ({ post, styles }) => {
       <p className="absolute top-5 right-5">{moment(createdAt).fromNow()}</p>
       <hr />
       <div className="absolute bottom-0 flex gap-10 bg-gradient-to-r from-slate-50 to-pink-50 w-full justify-center py-2">
-        <span className="flex flex-col items-center gap-1">
+        <div className=" flex  items-center gap-4">
           <BiSolidLike
-            className={`text-2xl hover:text-pink-700 cursor-pointer hover:scale-110`}
+            className={`${
+              alreadyLiked && "text-pink-700"
+            } text-2xl hover:text-pink-700 cursor-pointer hover:scale-110`}
             onClick={handleLike}
           />{" "}
-          {likeCount}
-        </span>
-        <span className="flex flex-col items-center gap-1">
+          <span
+            className="cursor-pointer font-bold hover:scale-110"
+            onClick={() => setOpenLike(true)}
+          >
+            {likeCount}
+          </span>
+          {openLike && <LikesCard props={{ likes, setOpenLike }} />}
+        </div>
+
+        <span className="flex items-center  gap-4">
           <TfiCommentsSmiley
             onClick={() => setIsOpen(true)}
             className="text-2xl cursor-pointer hover:scale-110"
           />{" "}
           {commentCount}
         </span>
-        <div className="absolute bottom-5 right-5">
+        <div className="absolute bottom-1 right-4">
           {user?.userName === userName && (
             <MdDelete
               className="text-3xl hover:text-pink-950 cursor-pointer hover:scale-110"
