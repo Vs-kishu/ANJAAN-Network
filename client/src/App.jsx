@@ -4,7 +4,8 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import { useCheckAuth } from "./utils/hooks/useCheckAuth";
 import { useEffect } from "react";
-import ProtectedRoute from "./utils/ProtectedRoute";
+import { AuthRoute, ProtectedRoute } from "./utils/ProtectedRoute";
+import ProfilePage from "./components/ProfilePage";
 
 const App = () => {
   const { checkUser } = useCheckAuth();
@@ -19,11 +20,19 @@ const App = () => {
         <Route
           path="register"
           element={
-            <ProtectedRoute>
+            <AuthRoute>
               <Register />
-            </ProtectedRoute>
+            </AuthRoute>
           }
         />
+        <Route
+          path="/profile/:userName"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

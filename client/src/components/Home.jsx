@@ -29,7 +29,7 @@ const Home = () => {
     );
   }
   return (
-    <main className=" grid grid-flow-row place-items-center w-full sm:w-[600px] h-[90vh] pt-5 mx-auto gap-3 overflow-y-scroll ">
+    <main className=" grid grid-flow-row place-items-center bg-pink-300  bg-opacity-25  w-full sm:w-[600px] h-[90vh] pt-5 mx-auto gap-3 overflow-y-scroll ">
       {data?.getPosts?.map((post, index) => (
         <PostCard
           key={post.id}
@@ -44,7 +44,7 @@ const Home = () => {
       >
         <Tooltip title="Add New Post" placement="top-start">
           <IconButton>
-            <MdOutlineAddCircle className="text-6xl shadow-md shadow-black rounded-full sm:text-8xl  text-gray-500  " />
+            <MdOutlineAddCircle className="text-6xl shadow-md shadow-black rounded-full sm:text-8xl bg-pink-950  text-gray-100 hover:scale-110  " />
           </IconButton>
         </Tooltip>
       </div>

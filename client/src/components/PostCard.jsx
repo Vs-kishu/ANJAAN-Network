@@ -39,10 +39,9 @@ const PostCard = ({ post, styles }) => {
     likePost();
   };
   const alreadyLiked = likes.find((like) => like.userName === user?.userName);
-  console.log(alreadyLiked);
   return (
     <div
-      className={`${styles} relative font-kalam w-full  sm:w-96 h-60 p-5 flex flex-col items-center  rounded-lg shadow-sm shadow-black hover:scale-10 border border-gray-400`}
+      className={`${styles} relative font-kalam w-full  sm:w-96  p-5 flex flex-col items-center  rounded-lg shadow-sm shadow-black hover:scale-10 border border-gray-400`}
     >
       <Avatar
         sx={{
@@ -59,10 +58,10 @@ const PostCard = ({ post, styles }) => {
         {userName.toUpperCase().split(" ")[0]?.split("")[0]}
         {userName?.toUpperCase().split(" ")[1]?.split("")[0]}
       </Avatar>
-      <p className="mt-14 text-xl text-pink-900 ">{body}</p>
+      <p className="mt-14 text-xl text-pink-900 p-4 ">{body}</p>
       <p className="absolute top-5 right-5">{moment(createdAt).fromNow()}</p>
       <hr />
-      <div className="absolute bottom-0 flex gap-10 bg-gradient-to-r from-slate-50 to-pink-50 w-full justify-center py-2">
+      <div className="relative flex gap-10 bg-gradient-to-r from-pink-200 to-pink-300 rounded-lg w-full justify-center py-2">
         <div className=" flex  items-center gap-4">
           <BiSolidLike
             className={`${

@@ -6,6 +6,7 @@ const {
   validateRegisterInputs,
   validLoginInputs,
 } = require("../../utils/validators");
+const user = require("../../models/user");
 require("dotenv").config();
 
 function generateToken(user) {
@@ -84,6 +85,20 @@ module.exports = {
         id: res.id,
         token,
       };
+    },
+  },
+  Query: {
+    async getUser(_, { userName }) {
+      try {
+        const user = await User.findOne({ userName });
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
     },
   },
 };
