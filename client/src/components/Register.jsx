@@ -45,6 +45,10 @@ const Register = () => {
     setIsLogIn(!isLogIn);
   };
 
+  const handleGuestLogin = async () => {
+    await addUser({ variables: { userName: "GUEST", password: "guest" } });
+  };
+
   return (
     <section className="flex flex-col items-center mt-5 ">
       <div className=" flex  items-center gap-2 mb-2">
@@ -125,6 +129,18 @@ const Register = () => {
           >
             {loading ? "loading..." : isLogIn ? "Log In" : "Sign Up"}
           </button>
+          {isLogIn && (
+            <button
+              type="button"
+              onClick={handleGuestLogin}
+              className={`${
+                loading && "animate-pulse"
+              }  w-72 mx-auto rounded-full text-2xl py-2 font-bold bg-gray-500 hover:bg-gray-200`}
+            >
+              {loading ? "loading..." : "Guset Log In"}
+            </button>
+          )}
+
           <span onClick={handleToggle} className="cursor-pointer">
             {isLogIn ? "Not An Account? " : "Already have an Account? "}
             <span className="hover:text-gray-500">

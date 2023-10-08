@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="relative bg-gray-50 flex justify-start md:justify-center gap-5 items-center shadow-sm z-[1000] shadow-slate-600 p-3">
-      <h1 className=" text-xl sm:text-4xl  font-croisant text-red-950">
+      <h1 className=" text-sm xs:text-xl sm:text-4xl  font-bold font-croisant text-red-950">
         ANJAAN-NETWORK
       </h1>
       <div className="flex items-center gap-2 absolute right-5 md:right-20">
