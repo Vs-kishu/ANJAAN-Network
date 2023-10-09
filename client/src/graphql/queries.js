@@ -23,4 +23,17 @@ const GET_POSTS = gql`
     }
   }
 `;
-export { GET_POSTS };
+
+const GET_USER = gql`
+  query getUser($userName: ID!) {
+    getUser(userName: $userName) {
+      id
+      userName
+      email
+      savedPosts {
+        _id
+      }
+    }
+  }
+`;
+export { GET_POSTS, GET_USER };

@@ -13,6 +13,12 @@ const userSchema = new Schema({
   email: {
     type: String,
   },
+  savedPosts: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   token: {
     type: String,
   },

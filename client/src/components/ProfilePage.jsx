@@ -1,6 +1,7 @@
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { GET_USER } from "../graphql/queries";
 
 const ProfilePage = () => {
   const { userName } = useParams();
@@ -18,6 +19,7 @@ const ProfilePage = () => {
       </h1>
     );
   }
+  console.log(data);
 
   const { email } = data.getUser;
   return (
@@ -59,13 +61,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
-const GET_USER = gql`
-  query getUser($userName: ID!) {
-    getUser(userName: $userName) {
-      id
-      userName
-      email
-    }
-  }
-`;

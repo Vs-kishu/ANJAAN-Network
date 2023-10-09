@@ -1,4 +1,6 @@
 const Post = require("../../models/post");
+const User = require("../../models/user");
+
 const checkAuth = require("../../utils/checkAuth");
 const { UserInputError, AuthenticationError } = require("apollo-server");
 
@@ -64,6 +66,29 @@ module.exports = {
         await post.save();
         return post;
       } else throw new UserInputError("post not found");
+    },
+    async savePost(_, { postID }, context) {
+      const { userName } = checkAuth(context);
+
+      try {
+        const userData = await User.findOne({ userName });
+        const postIndex = userData?.savedPosts.findIndex((savedPost) =>
+          savedPost.equals(postID)
+        );
+
+        console.log(postIndex);
+        if (postIndex) {
+          console.log("post");
+          userData.savedPosts.push(postID);
+        } else {
+          console.log("not here");
+          userData.savedPosts.splice(postIndex, 1);
+        }
+        await userData.save();
+        return userData;
+      } catch (error) {
+        console.log("err");
+      }
     },
   },
 };

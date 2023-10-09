@@ -23,6 +23,14 @@ module.exports = {
         throw new Error(error);
       }
     },
+    async getUserPosts(_, { userName }) {
+      try {
+        const posts = await Post.find({ userName });
+        return posts;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
   Mutation: {
     async createPost(_, { body }, context) {

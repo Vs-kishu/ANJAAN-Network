@@ -6,10 +6,12 @@ import { BiSolidLike } from "react-icons/bi";
 import { TfiCommentsSmiley } from "react-icons/tfi";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { GET_POSTS } from "../graphql/queries";
+import { GET_POSTS, GET_USER } from "../graphql/queries";
 import CommentForm from "./CommentForm";
 import { useState } from "react";
 import LikesCard from "./LikesCard";
+import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
+import { useSaved } from "../utils/hooks/useSaved";
 
 const PostCard = ({ post, styles }) => {
   const {
@@ -25,7 +27,7 @@ const PostCard = ({ post, styles }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((store) => store.user);
   const [openLike, setOpenLike] = useState(false);
-
+  const { data } = useSaved(user.userName);
   const [likePost] = useMutation(LIKE_POST, {
     variables: { postID: id },
     refetchQueries: [GET_POSTS, "getPosts"],
@@ -35,10 +37,18 @@ const PostCard = ({ post, styles }) => {
     variables: { postID: id },
     refetchQueries: [GET_POSTS, "getPosts"],
   });
+
+  const [savepost] = useMutation(SAVE_POST, {
+    variables: { postID: id },
+    refetchQueries: [GET_USER, "getUser"],
+  });
+
   const handleLike = () => {
     likePost();
   };
   const alreadyLiked = likes.find((like) => like.userName === user?.userName);
+  const alreadySaved = data?.find((post) => post._id === id);
+  console.log(alreadySaved);
   return (
     <div
       className={`${styles} relative font-kalam w-full  sm:w-96  p-5 flex flex-col items-center  rounded-lg shadow-sm shadow-black hover:scale-10 border border-gray-400`}
@@ -85,6 +95,10 @@ const PostCard = ({ post, styles }) => {
           />{" "}
           {commentCount}
         </span>
+        <div className="text-xl text-pink-950" onClick={() => savepost()}>
+          {alreadySaved ? <BsBookmarkStarFill /> : <BsBookmarkStar />}
+        </div>
+
         <div className="absolute bottom-1 right-4">
           {user?.userName === userName && (
             <MdDelete
@@ -114,5 +128,13 @@ const LIKE_POST = gql`
 const DELETE_POST = gql`
   mutation deletePost($postID: ID!) {
     deletePost(postID: $postID)
+  }
+`;
+
+const SAVE_POST = gql`
+  mutation savePost($postID: ID!) {
+    savePost(postID: $postID) {
+      id
+    }
   }
 `;
