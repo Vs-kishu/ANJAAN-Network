@@ -1,12 +1,18 @@
 import { PiPersonFill } from "react-icons/pi";
 import { GiExitDoor } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../store/slices/userSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.user);
+
+  const handleLogout = () => {
+    dispatch(removeUser());
+    navigate("/register");
+  };
 
   return (
     <nav className="relative bg-gray-50 flex justify-start md:justify-center gap-5 items-center shadow-sm z-[1000] shadow-slate-600 p-3">
@@ -14,9 +20,12 @@ const Navbar = () => {
         ANJAAN-NETWORK
       </h1>
       <div className="flex items-center gap-2 absolute right-5 md:right-20">
-        <span className="font-bold font-kalam text-pink-900">
+        <Link
+          to={`/profile/${user?.userName}`}
+          className="font-bold font-kalam text-pink-900"
+        >
           {user?.userName}
-        </span>
+        </Link>
         {user ? (
           <PiPersonFill className="text-4xl cursor-pointer" />
         ) : (
@@ -26,7 +35,7 @@ const Navbar = () => {
         )}
         {user && (
           <GiExitDoor
-            onClick={() => dispatch(removeUser())}
+            onClick={handleLogout}
             className="text-4xl cursor-pointer "
           />
         )}
