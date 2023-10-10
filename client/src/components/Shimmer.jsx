@@ -2,17 +2,26 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
 export default function Shimmer() {
-  const shimArr = new Array(10);
   return (
-    <main>
-      {shimArr.map((_, i) => (
-        <Stack key={i} spacing={1}>
-          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-          <Skeleton variant="circular" width={40} height={40} />
-          <Skeleton variant="rectangular" width={210} height={60} />
-          <Skeleton variant="rounded" width={210} height={60} />
-        </Stack>
-      ))}
+    <main className="flex flex-col items-center justify-center w-full">
+      <Stack spacing={1} className="overflow-hidden w-11/12 ">
+        <Skeleton variant="text" width={400} sx={{ fontSize: "1rem" }} />
+        <Skeleton variant="circular" width={50} height={50} />
+        <Skeleton variant="rectangular" width={400} height={60} />
+        <Skeleton variant="rounded" width={400} height={60} />
+      </Stack>
+      <Stack spacing={1} className="overflow-hidden w-11/12 ">
+        <Skeleton variant="text" width={400} sx={{ fontSize: "1rem" }} />
+        <Skeleton variant="circular" width={50} height={50} />
+        <Skeleton variant="rectangular" width={400} height={60} />
+        <Skeleton variant="rounded" width={400} height={60} />
+      </Stack>
+      <Stack spacing={1} className="overflow-hidden w-11/12 ">
+        <Skeleton variant="text" width={400} sx={{ fontSize: "1rem" }} />
+        <Skeleton variant="circular" width={50} height={50} />
+        <Skeleton variant="rectangular" width={400} height={60} />
+        <Skeleton variant="rounded" width={400} height={60} />
+      </Stack>
     </main>
   );
 }
