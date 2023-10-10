@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { useForm } from "../utils/hooks/useForm";
 import { gql, useMutation } from "@apollo/client";
-import { GET_POSTS } from "../graphql/queries";
+import { GET_POST, GET_POSTS } from "../graphql/queries";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 const CommentForm = ({ props }) => {
@@ -13,8 +13,9 @@ const CommentForm = ({ props }) => {
   });
 
   const [createPost] = useMutation(CREATE_COMMENT, {
-    refetchQueries: [GET_POSTS, "getPosts"],
     variables: values,
+
+    refetchQueries: [GET_POST, "getPost"],
   });
 
   const [deletePost] = useMutation(DELETE_COMMENT, {

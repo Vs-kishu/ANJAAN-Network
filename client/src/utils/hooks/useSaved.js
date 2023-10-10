@@ -8,7 +8,7 @@ export function useSaved(userName) {
   });
 
   return {
-    loading,
+    saving: loading,
     error,
     data: data ? data.getUser.savedPosts : null,
   };

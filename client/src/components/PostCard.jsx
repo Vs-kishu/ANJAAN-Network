@@ -27,18 +27,20 @@ const PostCard = ({ post, styles }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((store) => store.user);
   const [openLike, setOpenLike] = useState(false);
-  const { data } = useSaved(user.userName);
-  const [likePost] = useMutation(LIKE_POST, {
+
+  const { data } = useSaved(user?.userName);
+
+  const [likePost, { loading: liking }] = useMutation(LIKE_POST, {
     variables: { postID: id },
     refetchQueries: [GET_POSTS, "getPosts"],
   });
 
-  const [deletePost] = useMutation(DELETE_POST, {
+  const [deletePost, { loading: deleting }] = useMutation(DELETE_POST, {
     variables: { postID: id },
     refetchQueries: [GET_POSTS, "getPosts"],
   });
 
-  const [savepost] = useMutation(SAVE_POST, {
+  const [savepost, { loading: saving }] = useMutation(SAVE_POST, {
     variables: { postID: id },
     refetchQueries: [GET_USER, "getUser"],
   });
@@ -46,9 +48,8 @@ const PostCard = ({ post, styles }) => {
   const handleLike = () => {
     likePost();
   };
-  const alreadyLiked = likes.find((like) => like.userName === user?.userName);
+  const alreadyLiked = likes?.find((like) => like.userName === user?.userName);
   const alreadySaved = data?.find((post) => post._id === id);
-  console.log(alreadySaved);
   return (
     <div
       className={`${styles} relative font-kalam w-full  sm:w-96  p-5 flex flex-col items-center  rounded-lg shadow-sm shadow-black hover:scale-10 border border-gray-400`}
@@ -65,7 +66,7 @@ const PostCard = ({ post, styles }) => {
           left: 10,
         }}
       >
-        {userName.toUpperCase().split(" ")[0]?.split("")[0]}
+        {userName?.toUpperCase().split(" ")[0]?.split("")[0]}
         {userName?.toUpperCase().split(" ")[1]?.split("")[0]}
       </Avatar>
       <p className="mt-14 text-xl text-pink-900 p-4 ">{body}</p>
@@ -76,7 +77,8 @@ const PostCard = ({ post, styles }) => {
           <BiSolidLike
             className={`${
               alreadyLiked && "text-pink-700"
-            } text-2xl hover:text-pink-700 cursor-pointer hover:scale-110`}
+            } text-2xl hover:text-pink-700  cursor-pointer hover:scale-110
+            ${liking && "animate-ping"}`}
             onClick={handleLike}
           />{" "}
           <span
@@ -95,14 +97,21 @@ const PostCard = ({ post, styles }) => {
           />{" "}
           {commentCount}
         </span>
-        <div className="text-xl text-pink-950" onClick={() => savepost()}>
+        <div
+          className={`text-xl text-pink-700 cursor-pointer ${
+            saving && "animate-ping"
+          }`}
+          onClick={() => savepost()}
+        >
           {alreadySaved ? <BsBookmarkStarFill /> : <BsBookmarkStar />}
         </div>
 
         <div className="absolute bottom-1 right-4">
           {user?.userName === userName && (
             <MdDelete
-              className="text-3xl hover:text-pink-950 cursor-pointer hover:scale-110"
+              className={`text-3xl hover:text-pink-950 cursor-pointer hover:scale-110 ${
+                deleting && "animate-ping"
+              }`}
               onClick={() => deletePost()}
             />
           )}

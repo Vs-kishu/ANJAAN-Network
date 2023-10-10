@@ -36,4 +36,28 @@ const GET_USER = gql`
     }
   }
 `;
-export { GET_POSTS, GET_USER };
+
+const GET_POST = gql`
+  query ($postID: ID!) {
+    getPost(postID: $postID) {
+      id
+      body
+      userName
+      createdAt
+      likeCount
+      commentCount
+      likes {
+        id
+        userName
+        createdAt
+      }
+      comments {
+        id
+        body
+        userName
+        createdAt
+      }
+    }
+  }
+`;
+export { GET_POSTS, GET_USER, GET_POST };

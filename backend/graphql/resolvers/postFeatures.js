@@ -69,19 +69,14 @@ module.exports = {
     },
     async savePost(_, { postID }, context) {
       const { userName } = checkAuth(context);
-
       try {
         const userData = await User.findOne({ userName });
         const postIndex = userData?.savedPosts.findIndex((savedPost) =>
           savedPost.equals(postID)
         );
-
-        console.log(postIndex);
-        if (postIndex) {
-          console.log("post");
-          userData.savedPosts.push(postID);
+        if (postIndex === -1) {
+          userData.savedPosts.unshift(postID);
         } else {
-          console.log("not here");
           userData.savedPosts.splice(postIndex, 1);
         }
         await userData.save();
